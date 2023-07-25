@@ -19,7 +19,6 @@
     # - name: Create t3.medium instance
     # - name: Create t3.medium instance using instance_config var
 
-
     # - name: Create var called instance_public_ip from the ec2 instance public ip address
 
     # - name: Print that variable
