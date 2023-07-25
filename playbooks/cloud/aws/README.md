@@ -1,6 +1,6 @@
 # Provision an AWS EC2 instance using Ansible Lightspeed
 
-[Demonstration video](../../../assets/img/provision_aws_instance.gif)
+![](../../../assets/img/provision_aws_instance.gif)
 
 >❗️**Note**
 >
