@@ -1,15 +1,14 @@
 # Provision an AWS EC2 instance using Ansible Lightspeed
 
-![](../../../assets/img/provision_aws_instance.gif)
+## ❗️Note
 
->❗️**Note**
->
->**Test the examples prior to performing a demo.**  
->
->
->Generative AI is dynamic in nature, and the Ansible Lightspeed with IBM Watson Code Assistant model continues to improve and evolve with each release.  
->
->This can result in receiving suggestions that differ from the examples provided.
+**Test the examples prior to performing a demo.**  
+
+Generative AI is dynamic in nature, and the Ansible Lightspeed with IBM Watson Code Assistant model continues to improve and evolve with each release.  
+
+This can result in receiving suggestions that differ from the examples provided.
+
+![](../../../assets/img/provision_aws_instance.gif)
 
 ## Overview
 
