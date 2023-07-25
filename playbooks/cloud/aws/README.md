@@ -14,6 +14,9 @@ This can result in receiving suggestions that differ from the examples provided.
 
 Provisions an AWS instance using pre-existing variables.
 
+**Example Ansible Playbook:**  
+[provision_aws_instance.yml](./provision_ec2_instance.yml)
+
 ### Step 1
 
 #### Uncomment and generate task first task description `- name: Create t3.medium instance`
