@@ -1,0 +1,40 @@
+---
+- name: AWS Cloud Operations
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    instance_config:
+      name: lightspeed-instance-01
+      tags:
+        function: aws-cloud-ops
+      key_name: 'Your AWS keypair name'
+      image_id: ami-016eb5d644c333ccb # RHEL 9 us-east-1
+      vpc_subnet_id: 'Your VPC subnet ID'
+      security_group: 'Your security group'
+      region: us-east-1
+
+  tasks:
+    - name: Create t3.medium instance using instance_config var
+      amazon.aws.ec2_instance:
+        name: "{{ instance_config.name }}"
+        key_name: "{{ instance_config.key_name }}"
+        instance_type: t3.medium
+        image_id: "{{ instance_config.image_id }}"
+        vpc_subnet_id: "{{ instance_config.vpc_subnet_id }}"
+        security_group: "{{ instance_config.security_group }}"
+        network:
+          assign_public_ip: true
+        region: "{{ instance_config.region }}"
+        tags: "{{ instance_config.tags }}"
+      register: ec2
+
+
+    - name: Create var called instance_public_ip from the ec2 instance public ip address
+      ansible.builtin.set_fact:
+        instance_public_ip: "{{ ec2.instances[0].public_ip_address }}"
+
+    - name: Print that variable
+      ansible.builtin.debug:
+        msg: "{{ instance_public_ip }}"

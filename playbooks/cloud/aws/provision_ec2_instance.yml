@@ -1,0 +1,24 @@
+---
+- name: AWS Cloud Operations
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    instance_config:
+      name: lightspeed-instance-01
+      tags:
+        function: aws-cloud-ops
+      key_name: 'Your AWS keypair name'
+      image_id: ami-016eb5d644c333ccb # RHEL 9 us-east-1
+      vpc_subnet_id: 'Your VPC subnet ID'
+      security_group: 'Your security group'
+      region: us-east-1
+
+  tasks:
+    # - name: Create t3.medium instance
+    # - name: Create t3.medium instance using instance_config var
+
+    # - name: Create var called instance_public_ip from the ec2 instance public ip address
+
+    # - name: Print that variable

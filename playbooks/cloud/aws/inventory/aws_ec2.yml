@@ -1,0 +1,18 @@
+# code: language=yaml
+---
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1
+hostnames:
+  - name: 'private-ip-address'
+    separator: '_'
+    prefix: 'tag:Name'
+compose:
+  ansible_host: public_ip_address|default(private_ip_address)
+filters:
+  instance-state-name: running
+  tag:function: aws-cloud-ops
+groups:
+  appservers: tags.Name == 'lightspeed-instance-01'
+  webservers: tags.Name == 'lightspeed-instance-01'
+  databases: tags.Name == 'lightspeed-instance-01'
