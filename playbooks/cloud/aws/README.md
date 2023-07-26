@@ -8,7 +8,7 @@ The Ansible Lightspeed with IBM Watson Code Assistant model continues to improve
 
 This can result in generated suggestions that differ from the examples provided.
 
-### Tested content is available in the `solutions` folder
+### Tested content is available in the corresponding `solutions` folder
 
 Tested Ansible content is available in the [solutions](./solutions/) folder. Please use this to compare your generated suggestions to the tested Ansible content.
 
@@ -23,7 +23,7 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
 1. Install the Ansible VS Code extension and activate Ansible Lightspeed. Below are resources to get started:
 
 - [Ansible Lightspeed Technical Preview blog](https://www.ansible.com/blog/welcome-to-the-ansible-lightspeed-technical-preview).
--  [Ansible Lightspeed Technical Preview blog](https://youtu.be/yfXcGB7l0II).
+-  [Ansible Lightspeed Technical Preview video](https://youtu.be/yfXcGB7l0II).
 
 
 
@@ -58,7 +58,7 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
 
 [./playbooks/cloud/aws/solutions/provision_aws_instance.yml](./solutions/provision_ec2_instance.yml)
 
-Rune the steps below in the [./playbooks/cloud/aws/provision_aws_instance.yml](./provision_ec2_instance.yml) example Ansible Playbook.
+Run the steps below in the [./playbooks/cloud/aws/provision_aws_instance.yml](./provision_ec2_instance.yml) example Ansible Playbook.
 
 ### Step 1
 
