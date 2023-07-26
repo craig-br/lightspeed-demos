@@ -64,6 +64,7 @@ Run the steps below in the [./playbooks/cloud/aws/provision_aws_instance.yml](./
 
 #### Uncomment and generate task first task description `- name: Create t3.medium instance`
 
+- Suggestion used the Playbook name, `AWS Cloud Operations`, to know which Ansible module to use.
 - Used natural language prompt to generate syntactically correct Ansible Playbook Task.
 - Suggestion incorporated Ansible best practices and used Fully Qualified Collection Name (FQCN).
 - Suggestion provides good variable examples for module arguments.
