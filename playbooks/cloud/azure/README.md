@@ -14,7 +14,7 @@ Tested Ansible content is available in the [solutions](./solutions/) folder. Ple
 
 ## Overview
 
-This demo provisions multiple Azure resources, such as a resource group, networking, security groups, and an Azure virtual machine.  
+This demo provisions multiple Azure resources, such as a resource group, networking, security group, and an Azure virtual machine.  
 
 This demo is more advanced as it has several tasks and requires manual changes to some of the suggestions. However, it's a good example of how Ansible Lightspeed uses previous task patterns, previously generated content, and variables in later suggestions.
 
