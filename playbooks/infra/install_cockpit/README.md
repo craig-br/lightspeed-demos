@@ -19,15 +19,15 @@ This Playbook installs Cockpit, copies a custom configuration file, and starts t
 The demo illustrates:
 
 * How Ansible Lightspeed uses the full Playbook context when generating a task.
-* Uses a generic task prompt to generate Ansible code based on the existing Playbook content.
+* Uses a generic task prompt to generate applicable, accurate Ansible code based on the existing Playbook content.
 
 ![](../../../assets/img/lightspeed_install_cockpit.gif)
 
 ## Demo preparation
 
-1. Create an Ansible Inventory file with the `rhel` group with the corresponding Linux target host(s).
+1. Create an Ansible Inventory file with a `rhel` Ansible inventory group with the corresponding Linux target host(s) details.
 
-- [Example Ansible inventory file](./inventory/inventory.yml)
+* [Example Ansible inventory file](./inventory/inventory.yml)
 
 ```yaml
 ---
