@@ -1,0 +1,45 @@
+---
+- name: Configure web servers
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Install httpd package
+      ansible.builtin.package:
+        name: httpd
+        state: present
+
+    - name: Copy httpd.conf.j2 template to /etc/httpd/conf/
+      ansible.builtin.template:
+        src: httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Start and enable httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+- name: Configure db servers
+  hosts: databases
+  become: true
+
+  tasks:
+    - name: Install postgresql-server
+      ansible.builtin.package:
+        name: postgresql-server
+        state: present
+
+    - name: Run postgresql setup
+      ansible.builtin.command: /usr/bin/postgresql-setup initdb
+      args:
+        creates: /var/lib/pgsql/data/postgresql.conf
+
+    - name: Start and enable postgresql service
+      ansible.builtin.service:
+        name: postgresql
+        state: started
+        enabled: true
