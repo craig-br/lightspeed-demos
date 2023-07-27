@@ -30,7 +30,6 @@
         tags: "{{ instance_config.tags }}"
       register: ec2
 
-
     - name: Create var called instance_public_ip from the ec2 instance public ip address
       ansible.builtin.set_fact:
         instance_public_ip: "{{ ec2.instances[0].public_ip_address }}"

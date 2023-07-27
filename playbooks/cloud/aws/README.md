@@ -23,9 +23,7 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
 1. Install the Ansible VS Code extension and activate Ansible Lightspeed. Below are resources to get started:
 
 - [Ansible Lightspeed Technical Preview blog](https://www.ansible.com/blog/welcome-to-the-ansible-lightspeed-technical-preview).
--  [Ansible Lightspeed Technical Preview video](https://youtu.be/yfXcGB7l0II).
-
-
+- [Ansible Lightspeed Technical Preview video](https://youtu.be/yfXcGB7l0II).
 
 2. Use environment variables to configure your AWS credentials as outlined in the [Ansible documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/docsite/guide_aws.html#authentication).
 3. Edit the `instance_config` variable keys with your AWS details:
@@ -46,6 +44,7 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
       security_group: 'Your security group'
       region: us-east-1
 ```
+
 ## Running the demo
 
 ### Ansible demo content
@@ -62,7 +61,7 @@ Run the steps below in the [./playbooks/cloud/aws/provision_aws_instance.yml](./
 
 ### Step 1
 
-#### Uncomment and generate task first task description `- name: Create t3.medium instance`
+#### Uncomment and generate the first task `- name: Create t3.medium instance`
 
 - Suggestion used the Playbook name, `AWS Cloud Operations`, to know which Ansible module to use.
 - Used natural language prompt to generate syntactically correct Ansible Playbook Task.

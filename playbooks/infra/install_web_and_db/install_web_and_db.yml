@@ -1,0 +1,22 @@
+---
+- name: Configure web servers
+  hosts: webservers
+  become: true
+
+  tasks:
+    # - name: Install httpd package
+
+    # - name: Copy httpd.conf.j2 template to /etc/httpd/conf/
+
+    # - name: Start and enable httpd service
+
+- name: Configure db servers
+  hosts: databases
+  become: true
+
+  tasks:
+    # - name: Install postgresql-server
+
+    # - name: Run postgresql setup
+
+    # - name: Start and enable postgresql service
