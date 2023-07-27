@@ -16,7 +16,7 @@ Tested Ansible content is available in the [solutions](./solutions/) folder. Ple
 
 This demo provisions an AWS EC2 instance using pre-existing variables.
 
-![](../../../assets/img/provision_aws_instance.gif)
+![](../../../assets/img/lightspeed_provision_aws_instance.gif)
 
 ## Demo preparation
 
