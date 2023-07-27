@@ -18,9 +18,9 @@ Please use the following resources to install the Ansible VS Code extension and 
 
 * Feel free to ask questions and provide feedback in the Ansible Lightspeed Matrix Room.
 
-## Test the examples prior to performing a demo
+## Test demo examples before doing a demo
 
-The Ansible Lightspeed with IBM Watson Code Assistant model continues to improve and evolve with each release.  
+The IBM Watson Code Assistant model continues to improve and evolve with each release.  
 
 This can result in generated suggestions that differ from the examples provided.
 
