@@ -1,0 +1,11 @@
+plugin: azure.azcollection.azure_rm
+auth_source: auto
+
+include_vm_resource_groups:
+  - rg-lightspeed
+
+conditional_groups:
+  rhel: 'name == "vm-lightspeed"'
+
+hostvar_expressions:
+  ansible_host: (public_dns_hostnames + public_ipv4_addresses) | first
