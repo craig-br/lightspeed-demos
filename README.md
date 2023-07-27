@@ -25,7 +25,7 @@ Please refer to the `README.md` for each demo in the corresponding demo root fol
 
 ### Infrastructure
 
-* [Install and configure Cockpit](./playbooks/infra/install_web_and_db/README.md)
+* [Install and configure Cockpit](./playbooks/infra/install_cockpit/README.md)
 * [Install and configure web and database packages](./playbooks/infra/install_web_and_db/README.md)
 
 ### Cloud

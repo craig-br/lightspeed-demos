@@ -14,12 +14,12 @@ Tested Ansible content is available in the [solutions](./solutions/) folder. Ple
 
 ## Overview
 
-This Playbook installs Cockpit, copies a custom Cockpit configuration file, and starts the cockpit service.  
+This Playbook installs Cockpit, copies a custom configuration file, and starts the cockpit service.  
 
 The demo illustrates:
 
-* How Ansible Lightspeed uses the full Playbook context by generating a task based on the `module_defaults` Playbook section.
-* Uses a generic task prompt to generate Ansible content based on the existing Playbook context.
+* How Ansible Lightspeed uses the full Playbook context when generating a task.
+* Uses a generic task prompt to generate Ansible code based on the existing Playbook content.
 
 ![](../../../assets/img/lightspeed_install_cockpit.gif)
 
