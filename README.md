@@ -47,5 +47,6 @@ Please refer to the `README.md` for each demo in the corresponding demo root fol
 ### Cloud
 
 * [Provision an AWS EC2 instance](./playbooks/cloud/aws/README.md)
+* [Provision Azure resources and VM](./playbooks/cloud/azure/README.md)
 
 ---

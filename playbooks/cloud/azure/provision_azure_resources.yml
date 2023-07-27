@@ -1,0 +1,42 @@
+---
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    vm_instance:
+      image:
+        offer: RHEL
+        publisher: RedHat
+        sku: 9-lvm
+        version: latest
+      network_interfaces:
+        - nic-lightspeed
+      ssh_public_keys:
+        - path: /home/rhel/.ssh/authorized_keys
+          key_data: "{{ lookup('file', 'Your Azure public SSH key file') }}"
+      ssh_password_enabled: false
+      vm_size: Standard_DS2_v2
+      admin_username: rhel
+
+  tasks:
+    # - name: Create resource group called rg-lightspeed
+
+        # # Correct address_prefixes to 10.0.0.0/16
+    # - name: Create virtual network called vnet-lightspeed
+
+        # # Correct address_prefix to 10.0.1.0/24
+    # - name: Add subnet called subnet-lightspeed
+
+    # - name: Create public IP address called ip-lightspeed
+
+    # - name: Create azure_public_ip var
+
+    # - name: Print azure_public_ip var
+
+    # - name: Create Network Security Group that allows SSH
+
+    # - name: Create virtual network interface
+
+    # - name: Create VM using vm_instance var
