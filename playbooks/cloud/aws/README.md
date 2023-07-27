@@ -61,7 +61,7 @@ Run the steps below in the [./playbooks/cloud/aws/provision_aws_instance.yml](./
 
 ### Step 1
 
-#### Uncomment and generate task first task description `- name: Create t3.medium instance`
+#### Uncomment and generate the first task `- name: Create t3.medium instance`
 
 - Suggestion used the Playbook name, `AWS Cloud Operations`, to know which Ansible module to use.
 - Used natural language prompt to generate syntactically correct Ansible Playbook Task.
