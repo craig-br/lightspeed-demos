@@ -14,6 +14,7 @@ Feel free to ask questions and provide feedback in the [Ansible Lightspeed Matri
 ## Test before doing a demo
 
 The IBM Watson Code Assistant model continues to improve and evolve with each release. This can result in generated suggestions that differ from the examples provided.
+
 ### Tested content is available in the corresponding `solutions` folder
 
 Tested Ansible content is available in the `solutions` folder for each demo. Please use this to compare your generated suggestions to the tested Ansible content.
