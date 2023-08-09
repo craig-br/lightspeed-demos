@@ -1,15 +1,12 @@
 # Provision an AWS EC2 instance using Ansible Lightspeed
 
-## ❗️Note
+## Configure and activate Ansible Lightspeed
 
-### Test the examples prior to performing a demo
+Install the VS Code extension and activate Ansible Lightspeed using resources in the [getting started guide](../../../getting_started.md).
 
-The Ansible Lightspeed with IBM Watson Code Assistant model continues to improve and evolve with each release.  
+### ❗️ Test suggestions using the corresponding Playbook in the `solutions` folder
 
-This can result in generated suggestions that differ from the examples provided.
-
-### Tested content is available in the corresponding `solutions` folder
-
+The Ansible Lightspeed model continues to improve with each release and generated suggestions may differ from the examples provided.  
 Tested Ansible content is available in the [solutions](./solutions/) folder. Please use this to compare your generated suggestions to the tested Ansible content.
 
 ## Overview
@@ -20,13 +17,9 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
 
 ## Demo preparation
 
-1. Install the Ansible VS Code extension and activate Ansible Lightspeed. Below are resources to get started:
-
-- [Ansible Lightspeed Technical Preview blog](https://www.ansible.com/blog/welcome-to-the-ansible-lightspeed-technical-preview).
-- [Ansible Lightspeed Technical Preview video](https://youtu.be/yfXcGB7l0II).
-
-2. Use environment variables to configure your AWS credentials as outlined in the [Ansible documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/docsite/guide_aws.html#authentication).
-3. Edit the `instance_config` variable keys with your AWS details:
+1. Use environment variables to configure your AWS credentials as outlined in the [Ansible documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/docsite/guide_aws.html#authentication).
+2. Run the [./prepare/provision_aws_resources.yml](./prepare/provision_aws_resources.yml) Playbook to create AWS resources.
+<!-- 3. Edit the `instance_config` variable keys in the [./playbooks/cloud/aws/provision_aws_instance.yml](./provision_ec2_instance.yml) Playbook with your AWS details:
 
 - `key_name`
 - `vpc_subnet_id`
@@ -43,7 +36,7 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
       vpc_subnet_id: 'Your VPC subnet ID'
       security_group: 'Your security group'
       region: us-east-1
-```
+``` -->
 
 ## Running the demo
 
@@ -61,30 +54,40 @@ Run the steps below in the [./playbooks/cloud/aws/provision_aws_instance.yml](./
 
 ### Step 1
 
-#### Uncomment and generate the first task `- name: Create t3.medium instance`
+#### Uncomment and generate task `- name: Gather secgroup-lightspeed EC2 security group info`
 
-- Suggestion used the Playbook name, `AWS Cloud Operations`, to know which Ansible module to use.
 - Used natural language prompt to generate syntactically correct Ansible Playbook Task.
 - Suggestion incorporated Ansible best practices and used Fully Qualified Collection Name (FQCN).
-- Suggestion provides good variable examples for module arguments.
 
 ### Step 2
 
-#### Update first task description `- name: Create t3.medium instance using instance_config var`
+#### Uncomment and generate task `- name: Create 'security_group' var from secgroup-lightspeed group_id`
 
-- Ansible Lightspeed used the updated natural language prompt and referenced the `instance_config` variable into the suggestion.
+- Used the Playbook context to use AWS Ansible modules in the suggestion.
+- Used natural language to generate the `security_group` variable using the correct variable keys.
 
 ### Step 3
 
-#### Uncomment and generate task `- name: Create var called instance_public_ip from the ec2 instance public ip address`
+#### Uncomment and generate task `- name: Gather subnet info tag:Name subnet-lightspeed`
 
-- Ansible Lightspeed kept continuity and used the `register` variable name from the previous task in the suggestion.
-- Ansible Lightspeed generated a complex variable using a simple prompt - `from the ec2 instance public ip address`.
+- Used `tag:Name subnet-lightspeed` in the prompt to use the correct AWS filter.
 
 ### Step 4
 
-#### Uncomment and generate task `- name: Print that variable`
+#### Uncomment and generate task `- name: Create vpc_subnet_id var`
 
-- Ansible Lightspeed used the previous variable name from a generic prompt.
+- Used `tag:Name subnet-lightspeed` in the prompt to use the correct AWS filter.
+
+### Step 5
+
+#### Uncomment and generate the first task `Create EC2 t2.micro instance`
+
+- Suggestion provides good variable examples for module arguments.
+
+### Step 6
+
+#### Update the previous task description `- name: Create EC2 t2.micro instance using ec2_config var`
+
+- Ansible Lightspeed used the updated natural language prompt and referenced the `ec2_config` variable in the suggestion.
 
 ---
