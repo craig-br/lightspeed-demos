@@ -1,0 +1,77 @@
+---
+- name: Create AWS resources
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  module_defaults:
+    group/aws:
+      region: us-east-1
+
+  tasks:
+    - name: Create key pair called lightspeed-keypair
+      amazon.aws.ec2_key:
+        name: lightspeed-keypair
+      register: ec2_key
+
+    - name: Save private key to /tmp/lightspeed-keypair.pem
+      ansible.builtin.copy:
+        content: "{{ ec2_key.key.private_key }}"
+        dest: /tmp/lightspeed-keypair.pem
+        mode: '0600'
+      when: ec2_key.changed
+
+    - name: Create VPC named vpc-lightspeed
+      amazon.aws.ec2_vpc_net:
+        name: vpc-lightspeed
+        cidr_block: 10.0.0.0/16
+        tags:
+          Name: vpc-lightspeed
+        state: present
+      register: ec2_vpc_net
+
+    - name: Create vpc_id var
+      ansible.builtin.set_fact:
+        vpc_id: "{{ ec2_vpc_net.vpc.id }}"
+
+    - name: Create security group named secgroup-lightspeed in vpc-lightspeed vpc
+      amazon.aws.ec2_security_group:
+        name: secgroup-lightspeed
+        description: SSH access
+        vpc_id: "{{ vpc_id }}"
+        state: present
+        rules:
+          - proto: tcp
+            ports:
+              - 22
+            cidr_ip: 0.0.0.0/0
+            rule_desc: allow all on ssh port
+      register: secgroup_lightspeed
+
+    - name: Create subnet with 10.0.1.0/24 cidr named subnet-lightspeed
+      amazon.aws.ec2_vpc_subnet:
+        vpc_id: "{{ vpc_id }}"
+        tags:
+          Name: subnet-lightspeed
+        cidr: 10.0.1.0/24
+        state: present
+      register: subnet
+
+    - name: Create internet gateway
+      amazon.aws.ec2_vpc_igw:
+        vpc_id: "{{ vpc_id }}"
+        tags:
+          Name: gateway-lightspeed
+        state: present
+      register: igw
+
+    - name: Create public route table
+      amazon.aws.ec2_vpc_route_table:
+        vpc_id: "{{ vpc_id }}"
+        tags:
+          Name: public-table
+        subnets:
+          - "{{ subnet.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ igw.gateway_id }}"
