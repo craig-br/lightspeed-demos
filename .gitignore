@@ -1,2 +1,5 @@
 .DS_Store
 .vscode/settings.json
+*.pub
+*.pem
+*_ssh_key
