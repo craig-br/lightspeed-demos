@@ -9,18 +9,44 @@
       location: eastus
 
   tasks:
-    - name: Generate Linux SSH key called "{{ playbook_dir }}/../azure_demo_ssh_key" # noqa name[template]
+    - name: Check if this is Instruqt environment
+      ansible.builtin.set_fact:
+        __sandbox_id: "{{ lookup('ansible.builtin.env', '_SANDBOX_ID') }}"
+
+    - name: Copy Instruqt lab SSH keys to demo folder
+      when: __sandbox_id | length > 0
+      block:
+        - name: Check if ~/.ssh/instruqt_lab exists
+          ansible.builtin.stat:
+            path: ~/.ssh/instruqt_lab
+          register: __instruqt_ssh_key
+
+        - name: Copy Instruqt lab SSH keys
+          ansible.builtin.copy:
+            src: "~/.ssh/{{ item.name }}"
+            dest: "files/azure_demo_ssh_key{{ item.name | splitext | last }}"
+            mode: "{{ item.mode }}"
+          loop:
+            - name: instruqt_lab
+              mode: '0600'
+            - name: instruqt_lab.pub
+              mode: '0644'
+          when: __instruqt_ssh_key.stat.exists
+
+    - name: Generate Linux SSH key called files/azure_demo_ssh_key # noqa name[template]
       community.crypto.openssh_keypair:
-        path: '{{ playbook_dir }}/../azure_demo_ssh_key'
+        path: files/azure_demo_ssh_key
         type: rsa
         size: 4096
         state: present
         force: false
+      when: __sandbox_id | length == 0
       register: azure_key
 
     - name: Create resource group called rg-lightspeed
       azure.azcollection.azure_rm_resourcegroup:
         name: rg-lightspeed
+        location: eastus
       register: rg
 
     - name: Create virtual network called vnet-lightspeed

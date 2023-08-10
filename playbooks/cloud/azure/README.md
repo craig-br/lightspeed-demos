@@ -4,13 +4,10 @@
 
 Install the VS Code extension and activate Ansible Lightspeed using resources in the [getting started guide](../../../getting_started.md).
 
-## ❗️Note - Test the examples before doing a demo
+### ❗️ Test suggestions using the corresponding `solution_*.yml` Playbook
 
-The model continues to improve and evolve with each release and generated suggestions could differ from the examples provided.
-
-### Tested content is available in the corresponding `solutions` folder
-
-Tested Ansible content is available in the [solutions](./solutions/) folder. Please use this to compare your generated suggestions to the tested Ansible content.
+The Ansible Lightspeed model continues to improve with each release and generated suggestions may differ from the examples provided.  
+Tested Ansible content starts with the `solution_*.yml` prefix. For example, `solution_provision_azure_vm.yml` Please use this to compare your generated suggestions to the tested Ansible content.
 
 ## Overview
 
@@ -25,26 +22,28 @@ An example Azure inventory is available in the [inventory](./inventory/) folder.
 ## Demo preparation
 
 1. Use environment variables to configure your Azure credentials as outlined in the [Ansible Microsoft Azure guide](https://docs.ansible.com/ansible/latest/scenario_guides/guide_azure.html#using-environment-variables).
-2. Run the [./prepare/prepare_provision_azure_vm.yml](./prepare/prepare_provision_azure_vm.yml) Playbook to create the required Azure demo resources before running the `provision_azure_vm.yml` Playbook.
+2. Run the [./prepare_azure_environment.yml](./prepare_azure_environment.yml) Playbook to create the required Azure demo resources before running the `demo_provision_azure_vm.yml` Playbook.
 
 ### Accessing the instance
 
-1. The `./prepare/prepare_provision_azure_vm.yml` creates a temporary SSH private `*_ssh_key` and public `*_ssh_key.pub` key file in the `./playbooks/cloud/azure/` folder to access the instance.
+1. The `./prepare_azure_environment.yml` creates a temporary SSH private `*_ssh_key` and public `*_ssh_key.pub` key file in the `./playbooks/cloud/azure/files/` folder to access the instance.
 2. An example inventory is located the [inventory folder](./inventory/).
 
 ## Running the demo
 
 ### Ansible demo content
 
-#### Initial Ansible Playbook to use in the demo
+#### Ansible Playbook to use in the demo
 
-[./playbooks/cloud/azure/provision_azure_resources.yml](./provision_azure_resources.yml)
+[./playbooks/cloud/azure/demo_provision_azure_vm.yml](./demo_provision_azure_vm.yml)
 
 #### Tested Ansible Playbook to compare your results
 
-[./playbooks/cloud/azure/solutions/provision_azure_resources.yml](./solutions/provision_azure_resources.yml)
+[./playbooks/cloud/azure/solutions/solution_provision_azure_vm.yml](./solution_provision_azure_vm.yml)
 
-Run the steps below in the initial [./playbooks/cloud/azure/provision_azure_resources.yml](./provision_azure_resources.yml) example Ansible Playbook.
+## Running the demo
+
+Run the steps below in the initial [./playbooks/cloud/azure/demo_provision_azure_vm.yml](./demo_provision_azure_vm.yml) example Ansible Playbook.
 
 ### Step 1
 

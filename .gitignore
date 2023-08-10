@@ -3,3 +3,5 @@
 *.pub
 *.pem
 *_ssh_key
+*-artifact.json
+*.log

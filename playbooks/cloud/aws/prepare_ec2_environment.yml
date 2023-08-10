@@ -78,5 +78,5 @@
     - name: Save private key file
       ansible.builtin.copy:
         content: "{{ ec2_key.key.private_key }}"
-        dest: "{{ playbook_dir }}/../lightspeed-keypair.pem"
+        dest: "files/lightspeed-keypair.pem"
         mode: '0600'
