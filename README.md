@@ -1,6 +1,6 @@
-# Ansible Lightspeed with IBM Watson Code Assistant demo content
+# Ansible Lightspeed demo content
 
-Compilation of Ansible Lightspeed with IBM Watson Code Assistant demo content and examples.
+Compilation of Ansible Lightspeed demo content and examples.
 
 ## How do I configure Ansible Lightspeed?
 
