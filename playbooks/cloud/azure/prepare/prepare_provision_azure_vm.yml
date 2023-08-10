@@ -1,40 +1,34 @@
 ---
-- name: Create Azure VM
+- name: Create Azure resources
   hosts: localhost
   connection: local
   gather_facts: false
 
-  vars:
-    vm_instance:
-      image:
-        offer: RHEL
-        publisher: RedHat
-        sku: 9-lvm
-        version: latest
-      network_interfaces:
-        - nic-lightspeed
-      ssh_public_keys:
-        - path: /home/rhel/.ssh/authorized_keys
-          key_data: "{{ lookup('file', 'Your Azure public SSH key file location') }}"
-      ssh_password_enabled: false
-      vm_size: Standard_DS2_v2
-      admin_username: rhel
-
+  module_defaults:
+    group/azure:
+      location: eastus
 
   tasks:
+    - name: Generate Linux SSH key called "{{ playbook_dir }}/../azure_demo_ssh_key" # noqa name[template]
+      community.crypto.openssh_keypair:
+        path: '{{ playbook_dir }}/../azure_demo_ssh_key'
+        type: rsa
+        size: 4096
+        state: present
+        force: false
+      register: azure_key
+
     - name: Create resource group called rg-lightspeed
       azure.azcollection.azure_rm_resourcegroup:
         name: rg-lightspeed
-        location: eastus
+      register: rg
 
-        # # Correct address_prefixes to 10.0.0.0/16
     - name: Create virtual network called vnet-lightspeed
       azure.azcollection.azure_rm_virtualnetwork:
         resource_group: rg-lightspeed
         name: vnet-lightspeed
         address_prefixes: 10.0.0.0/16
 
-        # # Correct address_prefix to 10.0.1.0/24
     - name: Add subnet called subnet-lightspeed
       azure.azcollection.azure_rm_subnet:
         resource_group: rg-lightspeed
@@ -47,20 +41,16 @@
         resource_group: rg-lightspeed
         allocation_method: Static
         name: ip-lightspeed
-      register: output_ip_address
+      register: ip_lightspeed
 
     - name: Create azure_public_ip var
       ansible.builtin.set_fact:
-        azure_public_ip: "{{ output_ip_address.state.ip_address }}"
-
-    - name: Print azure_public_ip var
-      ansible.builtin.debug:
-        var: azure_public_ip
+        azure_public_ip: "{{ ip_lightspeed.state.ip_address }}"
 
     - name: Create Network Security Group that allows SSH
       azure.azcollection.azure_rm_securitygroup:
         resource_group: rg-lightspeed
-        name: network-securitygroup-lightspeed
+        name: secgroup-lightspeed
         rules:
           - name: SSH
             protocol: Tcp
@@ -76,16 +66,4 @@
         virtual_network: vnet-lightspeed
         subnet: subnet-lightspeed
         public_ip_name: ip-lightspeed
-        security_group: network-securitygroup-lightspeed
-
-    - name: Create VM using vm_instance var
-      azure.azcollection.azure_rm_virtualmachine:
-        resource_group: rg-lightspeed
-        name: vm-lightspeed
-        location: eastus
-        vm_size: "{{ vm_instance.vm_size }}"
-        admin_username: "{{ vm_instance.admin_username }}"
-        ssh_password_enabled: "{{ vm_instance.ssh_password_enabled }}"
-        ssh_public_keys: "{{ vm_instance.ssh_public_keys }}"
-        network_interfaces: "{{ vm_instance.network_interfaces }}"
-        image: "{{ vm_instance.image }}"
+        security_group: secgroup-lightspeed

@@ -5,7 +5,8 @@
   gather_facts: false
 
   vars:
-    vm_instance:
+    vm_config:
+      resource_group: rg-lightspeed
       image:
         offer: RHEL
         publisher: RedHat
@@ -15,77 +16,24 @@
         - nic-lightspeed
       ssh_public_keys:
         - path: /home/rhel/.ssh/authorized_keys
-          key_data: "{{ lookup('file', 'Your Azure public SSH key file location') }}"
+          key_data: "{{ lookup('file', playbook_dir + '/azure_demo_ssh_key.pub') }}"
       ssh_password_enabled: false
-      vm_size: Standard_DS2_v2
+      vm_size: Standard_A1_v2
       admin_username: rhel
 
-
   tasks:
-    - name: Create resource group called rg-lightspeed
-      azure.azcollection.azure_rm_resourcegroup:
-        name: rg-lightspeed
-        location: eastus
-
-        # # Correct address_prefixes to 10.0.0.0/16
-    - name: Create virtual network called vnet-lightspeed
-      azure.azcollection.azure_rm_virtualnetwork:
-        resource_group: rg-lightspeed
-        name: vnet-lightspeed
-        address_prefixes: 10.0.0.0/16
-
-        # # Correct address_prefix to 10.0.1.0/24
-    - name: Add subnet called subnet-lightspeed
-      azure.azcollection.azure_rm_subnet:
-        resource_group: rg-lightspeed
-        name: subnet-lightspeed
-        address_prefix: 10.0.1.0/24
-        virtual_network: vnet-lightspeed
-
-    - name: Create public IP address called ip-lightspeed
-      azure.azcollection.azure_rm_publicipaddress:
-        resource_group: rg-lightspeed
-        allocation_method: Static
-        name: ip-lightspeed
-      register: output_ip_address
-
-    - name: Create azure_public_ip var
-      ansible.builtin.set_fact:
-        azure_public_ip: "{{ output_ip_address.state.ip_address }}"
-
-    - name: Print azure_public_ip var
-      ansible.builtin.debug:
-        var: azure_public_ip
-
-    - name: Create Network Security Group that allows SSH
-      azure.azcollection.azure_rm_securitygroup:
-        resource_group: rg-lightspeed
-        name: network-securitygroup-lightspeed
-        rules:
-          - name: SSH
-            protocol: Tcp
-            destination_port_range: 22
-            access: Allow
-            priority: 1001
-            direction: Inbound
-
-    - name: Create virtual network interface
-      azure.azcollection.azure_rm_networkinterface:
-        resource_group: rg-lightspeed
-        name: nic-lightspeed
-        virtual_network: vnet-lightspeed
-        subnet: subnet-lightspeed
-        public_ip_name: ip-lightspeed
-        security_group: network-securitygroup-lightspeed
-
-    - name: Create VM using vm_instance var
+        # # 1. Uncomment this task description.
+    # - name: Create a Standard_A1_v2 RHEL 8 VM called vm-lightspeed
+        # # 2. Remove previous task description and suggestion and uncomment the "vars:" section.
+        # # 3. Generate a new task using the below task description.
+    - name: Create a VM called vm-lightspeed using vm_config var
       azure.azcollection.azure_rm_virtualmachine:
-        resource_group: rg-lightspeed
+        resource_group: "{{ vm_config.resource_group }}"
         name: vm-lightspeed
-        location: eastus
-        vm_size: "{{ vm_instance.vm_size }}"
-        admin_username: "{{ vm_instance.admin_username }}"
-        ssh_password_enabled: "{{ vm_instance.ssh_password_enabled }}"
-        ssh_public_keys: "{{ vm_instance.ssh_public_keys }}"
-        network_interfaces: "{{ vm_instance.network_interfaces }}"
-        image: "{{ vm_instance.image }}"
+        admin_username: "{{ vm_config.admin_username }}"
+        ssh_password_enabled: "{{ vm_config.ssh_password_enabled }}"
+        ssh_public_keys: "{{ vm_config.ssh_public_keys }}"
+        vm_size: "{{ vm_config.vm_size }}"
+        image: "{{ vm_config.image }}"
+        network_interfaces: "{{ vm_config.network_interfaces }}"
+      register: vm_output
