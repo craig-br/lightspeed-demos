@@ -17,3 +17,12 @@ ansible-navigator:
         - AZURE_SUBSCRIPTION_ID
         - AZURE_CLIENT_ID
         - AZURE_TENANT
+  playbook-artifact:
+    enable: true
+    save-as: "/tmp/{playbook_name}-artifact.json"
+    replay: "/tmp/replay-artifact.json"
+  logging:
+    file: /tmp/ansible_navigator.log
+  editor:
+    command: code -g {filename}:{line_number}
+    console: false
