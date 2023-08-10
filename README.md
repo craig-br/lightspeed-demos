@@ -11,13 +11,34 @@ Please use the following resources to install the Ansible VS Code extension and 
 
 Feel free to ask questions and provide feedback in the [Ansible Lightspeed Matrix Room](https://matrix.to/#/#lightspeed:ansible.com).
 
-## Test before doing a demo
+## ❗️Test before doing a demo
 
 The IBM Watson Code Assistant model continues to improve and evolve with each release. This can result in generated suggestions that differ from the examples provided.
 
-### Tested content is available in the corresponding `solutions` folder
+### Tested `solution_*.yml` Playbooks are available for each demo.
 
-Tested Ansible content is available in the `solutions` folder for each demo. Please use this to compare your generated suggestions to the tested Ansible content.
+Tested Ansible Playbooks are available for each corresponding demo Playbook and start with the `solution_*.yml` prefix. For example, `solution_provision_azure_vm.yml`.  
+Please use this to compare your generated suggestions before doing the demo.
+
+## Demo content folder structure
+
+The repository folder structure is as follows.
+
+```bash
+.
+└── playbooks/
+    └── <domain>/
+        ├── demo_<playbook_name>.yml <-- Initial Ansible content for demo.
+        └── prepare_<playbook_name>.yml <-- Used to prepare environment for demo.
+        └── README.md <-- Step by step instructions.
+        └── solution_<playbook_name>.yml <-- Tested Ansible content for comparison.
+```
+
+* `<domain>` - Ansible examples are sorted by domain. For example, the _cloud_ folder contains AWS, Azure, and Google Cloud content.
+* `demo_<playbook_name>.yml` - Playbooks that start with `demo_*` are the initial Ansible example to use in the demo. For example, _demo_provision_ec2_instance.yml_ located in the _cloud/aws_ folder.
+* `prepare_<playbook_name>.yml` - Playbooks that start with `prepare_*` prepares the environment for the demo.
+* `README.md` - Contains a video and step-by-step instructions to prepare and perform the demo.
+* `solution_<playbook_name>.yml` - Playbooks that start with `solution_*` have been tested with the latest version of the Ansible Lightspeed model. Use the tested Ansible content to compare your Ansible Lightspeed-generated outputs before the demo.
 
 ## Ansible Lightspeed demo list
 
@@ -33,24 +54,5 @@ Please refer to the `README.md` for each demo in the corresponding demo root fol
 * [Provision an AWS EC2 instance](./playbooks/cloud/aws/README.md)
 * [Provision Azure resources and VM](./playbooks/cloud/azure/README.md)
 
-## Demo content folder structure
-
-The repository folder structure is as follows.
-
-```bash
-.
-└── playbooks/
-    └── <domain>/
-        ├── <demo_content>.yml <-- Initial Ansible content for demo.
-        └── prepare/
-            └── <prepare_demo_content>.yml <-- Used to prepare environment for demo.
-        └── solutions/
-            └── <solution_demo_content>.yml <-- Tested Ansible content for comparison.
-```
-
-* `<domain>` - Ansible examples are sorted by domain. For example, the _cloud_ folder contains AWS, Azure, and Google Cloud content.
-* `<demo_content>.yml` - This refers to the initial Ansible example to use in the demo. For example, _provision_ec2_instance.yml_ located in the _cloud/aws_ folder.
-* `solutions/<solution_demo_content>.yml` - Ansible content that’s been tested with the latest version of the Ansible Lightspeed model. Use the tested Ansible content to compare your Ansible Lightspeed-generated outputs before the demo.
-* `prepare/<prepare_demo_content>.yml` - This Playbook location in certain demo folders prepares the environment for the demo.
 
 ---
