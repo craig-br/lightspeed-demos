@@ -1,0 +1,35 @@
+---
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    vm_config:
+      resource_group: rg-lightspeed
+      image:
+        offer: RHEL
+        publisher: RedHat
+        sku: 9-lvm
+        version: latest
+      network_interfaces:
+        - nic-lightspeed
+      ssh_public_keys:
+        - path: /home/rhel/.ssh/authorized_keys
+          key_data: "{{ lookup('file', playbook_dir + '/azure_demo_ssh_key.pub') }}"
+      ssh_password_enabled: false
+      vm_size: Standard_A1_v2
+      admin_username: rhel
+
+  tasks:
+    - name: Create a VM called vm-lightspeed using vm_config var
+      azure.azcollection.azure_rm_virtualmachine:
+        resource_group: "{{ vm_config.resource_group }}"
+        name: vm-lightspeed
+        admin_username: "{{ vm_config.admin_username }}"
+        ssh_password_enabled: "{{ vm_config.ssh_password_enabled }}"
+        ssh_public_keys: "{{ vm_config.ssh_public_keys }}"
+        vm_size: "{{ vm_config.vm_size }}"
+        image: "{{ vm_config.image }}"
+        network_interfaces: "{{ vm_config.network_interfaces }}"
+      register: vm_output

@@ -43,14 +43,14 @@ The repository folder structure is as follows.
     └── <domain>/
         ├── <demo_content>.yml <-- Initial Ansible content for demo.
         └── prepare/
-            └── <preparation_playbook>.yml <-- Used to prepare environment for demo.
+            └── <prepare_demo_content>.yml <-- Used to prepare environment for demo.
         └── solutions/
-            └── <demo_content>.yml <-- Tested Ansible content for comparison.
+            └── <solution_demo_content>.yml <-- Tested Ansible content for comparison.
 ```
 
 * `<domain>` - Ansible examples are sorted by domain. For example, the _cloud_ folder contains AWS, Azure, and Google Cloud content.
 * `<demo_content>.yml` - This refers to the initial Ansible example to use in the demo. For example, _provision_ec2_instance.yml_ located in the _cloud/aws_ folder.
-* `solutions/<demo_content>.yml` - Ansible content that’s been tested with the latest version of the Ansible Lightspeed model. Use the tested Ansible content to compare your Ansible Lightspeed-generated outputs before the demo.
-* `prepare/<preparation_playbook>.yml` - This Playbook location in certain demo folders prepares the environment for the demo.
+* `solutions/<solution_demo_content>.yml` - Ansible content that’s been tested with the latest version of the Ansible Lightspeed model. Use the tested Ansible content to compare your Ansible Lightspeed-generated outputs before the demo.
+* `prepare/<prepare_demo_content>.yml` - This Playbook location in certain demo folders prepares the environment for the demo.
 
 ---

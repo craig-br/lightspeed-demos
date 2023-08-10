@@ -17,26 +17,13 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
 
 ## Demo preparation
 
-1. Use environment variables to configure your AWS credentials as outlined in the [Ansible documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/docsite/guide_aws.html#authentication).
-2. Run the [./prepare/provision_aws_resources.yml](./prepare/provision_aws_resources.yml) Playbook to create AWS resources.
-<!-- 3. Edit the `instance_config` variable keys in the [./playbooks/cloud/aws/provision_aws_instance.yml](./provision_ec2_instance.yml) Playbook with your AWS details:
+1. Configure your AWS credential environment variables as outlined in the [Ansible AWS guide](https://docs.ansible.com/ansible/latest/collections/amazon/aws/docsite/guide_aws.html#authentication).
+2. Run the [./prepare/prepare_provision_ec2_instance.yml](./prepare/prepare_provision_ec2_instance.yml) Playbook to create the required AWS demo resources before running the `provision_aws_instance.yml` Playbook.
 
-- `key_name`
-- `vpc_subnet_id`
-- `security_group`
+### Accessing the instance
 
-```yaml
-  vars:
-    instance_config:
-      name: lightspeed-instance-01
-      tags:
-        function: aws-cloud-ops
-      key_name: 'Your AWS keypair name'
-      image_id: ami-016eb5d644c333ccb # RHEL 9 us-east-1
-      vpc_subnet_id: 'Your VPC subnet ID'
-      security_group: 'Your security group'
-      region: us-east-1
-``` -->
+1. The `./prepare/prepare_provision_ec2_instance.yml` creates a temporary SSH private .pem key file in the `./playbooks/cloud/aws/` folder to access the instance.
+2. An example inventory is located the [inventory folder](./inventory/).
 
 ## Running the demo
 
@@ -80,13 +67,13 @@ Run the steps below in the [./playbooks/cloud/aws/provision_aws_instance.yml](./
 
 ### Step 5
 
-#### Uncomment and generate the first task `Create EC2 t2.micro instance`
+#### Uncomment and generate task `Create EC2 t2.micro instance`
 
 - Suggestion provides good variable examples for module arguments.
 
 ### Step 6
 
-#### Update the previous task description `- name: Create EC2 t2.micro instance using ec2_config var`
+#### Remove the previous task and generate a new task with  `- name: Create EC2 t2.micro instance using ec2_config var`
 
 - Ansible Lightspeed used the updated natural language prompt and referenced the `ec2_config` variable in the suggestion.
 

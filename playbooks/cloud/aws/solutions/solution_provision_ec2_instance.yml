@@ -1,0 +1,57 @@
+---
+- name: AWS Cloud Operations
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  module_defaults:
+    group/aws:
+      region: us-east-1
+
+  vars:
+    ec2_config:
+      name: lightspeed-instance-01
+      key_name: lightspeed-keypair
+      image_id: ami-016eb5d644c333ccb # RHEL 9 us-east-1
+      state: running
+      volumes:
+        - device_name: /dev/sda1
+          ebs:
+            delete_on_termination: true
+      tags:
+        function: lightspeed-demo
+
+  tasks:
+    - name: Gather secgroup-lightspeed EC2 security group info
+      amazon.aws.ec2_security_group_info:
+        filters:
+          group-name: secgroup-lightspeed
+      register: secgroup_lightspeed
+
+    - name: Create 'security_group' var from secgroup-lightspeed group_id
+      ansible.builtin.set_fact:
+        security_group: "{{ secgroup_lightspeed.security_groups[0].group_id }}"
+
+    - name: Gather subnet info tag:Name subnet-lightspeed
+      amazon.aws.ec2_vpc_subnet_info:
+        filters:
+          tag:Name: subnet-lightspeed
+      register: subnet_lightspeed
+
+    - name: Create vpc_subnet_id var
+      ansible.builtin.set_fact:
+        vpc_subnet_id: "{{ subnet_lightspeed.subnets[0].subnet_id }}"
+
+    - name: Create EC2 t2.micro instance using ec2_config var
+      amazon.aws.ec2_instance:
+        name: "{{ ec2_config.name }}"
+        key_name: "{{ ec2_config.key_name }}"
+        instance_type: t2.micro
+        image_id: "{{ ec2_config.image_id }}"
+        network:
+          assign_public_ip: true
+        security_group: "{{ security_group }}"
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        tags: "{{ ec2_config.tags }}"
+        state: "{{ ec2_config.state }}"
+        volumes: "{{ ec2_config.volumes }}"

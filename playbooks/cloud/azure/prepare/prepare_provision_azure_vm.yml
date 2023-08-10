@@ -1,0 +1,69 @@
+---
+- name: Create Azure resources
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  module_defaults:
+    group/azure:
+      location: eastus
+
+  tasks:
+    - name: Generate Linux SSH key called "{{ playbook_dir }}/../azure_demo_ssh_key" # noqa name[template]
+      community.crypto.openssh_keypair:
+        path: '{{ playbook_dir }}/../azure_demo_ssh_key'
+        type: rsa
+        size: 4096
+        state: present
+        force: false
+      register: azure_key
+
+    - name: Create resource group called rg-lightspeed
+      azure.azcollection.azure_rm_resourcegroup:
+        name: rg-lightspeed
+      register: rg
+
+    - name: Create virtual network called vnet-lightspeed
+      azure.azcollection.azure_rm_virtualnetwork:
+        resource_group: rg-lightspeed
+        name: vnet-lightspeed
+        address_prefixes: 10.0.0.0/16
+
+    - name: Add subnet called subnet-lightspeed
+      azure.azcollection.azure_rm_subnet:
+        resource_group: rg-lightspeed
+        name: subnet-lightspeed
+        address_prefix: 10.0.1.0/24
+        virtual_network: vnet-lightspeed
+
+    - name: Create public IP address called ip-lightspeed
+      azure.azcollection.azure_rm_publicipaddress:
+        resource_group: rg-lightspeed
+        allocation_method: Static
+        name: ip-lightspeed
+      register: ip_lightspeed
+
+    - name: Create azure_public_ip var
+      ansible.builtin.set_fact:
+        azure_public_ip: "{{ ip_lightspeed.state.ip_address }}"
+
+    - name: Create Network Security Group that allows SSH
+      azure.azcollection.azure_rm_securitygroup:
+        resource_group: rg-lightspeed
+        name: secgroup-lightspeed
+        rules:
+          - name: SSH
+            protocol: Tcp
+            destination_port_range: 22
+            access: Allow
+            priority: 1001
+            direction: Inbound
+
+    - name: Create virtual network interface
+      azure.azcollection.azure_rm_networkinterface:
+        resource_group: rg-lightspeed
+        name: nic-lightspeed
+        virtual_network: vnet-lightspeed
+        subnet: subnet-lightspeed
+        public_ip_name: ip-lightspeed
+        security_group: secgroup-lightspeed
