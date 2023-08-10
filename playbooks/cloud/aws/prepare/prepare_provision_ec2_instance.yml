@@ -7,19 +7,17 @@
   module_defaults:
     group/aws:
       region: us-east-1
+      tags:
+        function: lightspeed-demo
 
   tasks:
     - name: Create key pair called lightspeed-keypair
       amazon.aws.ec2_key:
         name: lightspeed-keypair
+        force: true
       register: ec2_key
-
-    - name: Save private key to /tmp/lightspeed-keypair.pem
-      ansible.builtin.copy:
-        content: "{{ ec2_key.key.private_key }}"
-        dest: /tmp/lightspeed-keypair.pem
-        mode: '0600'
-      when: ec2_key.changed
+      notify:
+        - Save private key file
 
     - name: Create VPC named vpc-lightspeed
       amazon.aws.ec2_vpc_net:
@@ -75,3 +73,10 @@
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{ igw.gateway_id }}"
+
+  handlers:
+    - name: Save private key file
+      ansible.builtin.copy:
+        content: "{{ ec2_key.key.private_key }}"
+        dest: "{{ playbook_dir }}/../lightspeed-keypair.pem"
+        mode: '0600'
