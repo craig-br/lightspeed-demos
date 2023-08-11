@@ -9,6 +9,7 @@
       location: eastus
 
   tasks:
+    #  Check for controller job template _SANDBOX_ID var or terminal env var
     - name: Check if this is Instruqt environment
       ansible.builtin.set_fact:
         __sandbox_id: "{{ _SANDBOX_ID | default(lookup('ansible.builtin.env', '_SANDBOX_ID')) }}"
@@ -16,6 +17,7 @@
     - name: Copy Instruqt lab SSH keys to demo folder
       when: __sandbox_id | length > 0
       block:
+        # Evaluates to true if running from the terminal
         - name: Check if ~/.ssh/instruqt_lab exists
           ansible.builtin.stat:
             path: ~/.ssh/instruqt_lab
