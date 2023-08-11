@@ -11,7 +11,7 @@
   tasks:
     - name: Check if this is Instruqt environment
       ansible.builtin.set_fact:
-        __sandbox_id: "{{ lookup('ansible.builtin.env', '_SANDBOX_ID') }}"
+        __sandbox_id: "{{ _SANDBOX_ID | default(lookup('ansible.builtin.env', '_SANDBOX_ID')) }}"
 
     - name: Copy Instruqt lab SSH keys to demo folder
       when: __sandbox_id | length > 0
@@ -40,17 +40,23 @@
               mode: '0644'
           when: __instruqt_ssh_key.stat.exists
 
-    - name: Generate Linux SSH key called files/azure_demo_ssh_key # noqa name[template]
-      community.crypto.openssh_keypair:
-        path: files/azure_demo_ssh_key
-        type: rsa
-        size: 4096
-        state: present
-        force: false
+    - name: Generate local SSH keys if not Instruqt environment
       when: __sandbox_id | length == 0
-      register: azure_key
-      notify:
-        - Create files folder
+      block:
+        - name: Create files folder
+          ansible.builtin.file:
+            path: files
+            state: directory
+            mode: '0755'
+
+        - name: Generate Linux SSH key called files/azure_demo_ssh_key # noqa name[template]
+          community.crypto.openssh_keypair:
+            path: files/azure_demo_ssh_key
+            type: rsa
+            size: 4096
+            state: present
+            force: false
+          register: azure_key
 
     - name: Create resource group called rg-lightspeed
       azure.azcollection.azure_rm_resourcegroup:
@@ -102,10 +108,3 @@
         subnet: subnet-lightspeed
         public_ip_name: ip-lightspeed
         security_group: secgroup-lightspeed
-
-  handlers:
-    - name: Create files folder
-      ansible.builtin.file:
-        path: files
-        state: directory
-        mode: '0755'
