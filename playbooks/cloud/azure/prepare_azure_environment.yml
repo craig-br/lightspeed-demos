@@ -21,6 +21,13 @@
             path: ~/.ssh/instruqt_lab
           register: __instruqt_ssh_key
 
+        - name: Create files folder
+          ansible.builtin.file:
+            path: files
+            state: directory
+            mode: '0755'
+          when: __instruqt_ssh_key.stat.exists
+
         - name: Copy Instruqt lab SSH keys
           ansible.builtin.copy:
             src: "~/.ssh/{{ item.name }}"
