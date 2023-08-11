@@ -49,6 +49,8 @@
         force: false
       when: __sandbox_id | length == 0
       register: azure_key
+      notify:
+        - Create files folder
 
     - name: Create resource group called rg-lightspeed
       azure.azcollection.azure_rm_resourcegroup:
@@ -100,3 +102,10 @@
         subnet: subnet-lightspeed
         public_ip_name: ip-lightspeed
         security_group: secgroup-lightspeed
+
+  handlers:
+    - name: Create files folder
+      ansible.builtin.file:
+        path: files
+        state: directory
+        mode: '0755'
