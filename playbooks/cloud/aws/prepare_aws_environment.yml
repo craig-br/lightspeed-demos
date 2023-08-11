@@ -11,29 +11,26 @@
         function: lightspeed-demo
 
   tasks:
+    #  Check for controller job template _SANDBOX_ID var or terminal env var
     - name: Check if this is Instruqt environment
       ansible.builtin.set_fact:
-        __sandbox_id: "{{ lookup('ansible.builtin.env', '_SANDBOX_ID') }}"
+        __sandbox_id: "{{ _SANDBOX_ID | default(lookup('ansible.builtin.env', '_SANDBOX_ID')) }}"
 
-    - name: Create EC2 key pair from instruqt_lab key
+    - name: Create EC2 key pair in Instruqt environment
       when: __sandbox_id | length > 0
       block:
-        - name: Check if ~/.ssh/instruqt_lab.pub exists
+        # Evaluates to true if running from the terminal
+        - name: Check if ~/.ssh/instruqt_lab exists
           ansible.builtin.stat:
-            path: ~/.ssh/instruqt_lab.pub
-          register: __instruqt_ssh_pub_key
+            path: ~/.ssh/instruqt_lab
+          register: __instruqt_ssh_key
 
         - name: Create keypair called lightspeed-keypair from instruqt_lab.pub key
           amazon.aws.ec2_key:
             name: lightspeed-keypair
             key_material: "{{ lookup('ansible.builtin.file', '~/.ssh/instruqt_lab.pub') }}"
-          when: __instruqt_ssh_pub_key.stat.exists
+          when: __instruqt_ssh_key.stat.exists
           register: ec2_key
-
-        - name: Check if ~/.ssh/instruqt_lab exists
-          ansible.builtin.stat:
-            path: ~/.ssh/instruqt_lab
-          register: __instruqt_ssh_key
 
         - name: Create files folder
           ansible.builtin.file:
