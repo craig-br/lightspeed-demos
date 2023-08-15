@@ -6,30 +6,31 @@
     pgadmin_service_name: app-pgadmin
 
     pgadmin_container:
-      image: docker.io/dpage/pgadmin4
       name: pgadmin
-      network: bridge
+      image: docker.io/dpage/pgadmin4:7.5
       ports:
         - 8083:80
+      state: started
+      network: bridge
+      env:
+        PGADMIN_DEFAULT_EMAIL: student
+        PGADMIN_DEFAULT_PASSWORD: learn_ansible
       generate_systemd:
         path: /etc/systemd/system/
         container_prefix: app
         restart_policy: always
-      env:
-        PGADMIN_DEFAULT_EMAIL: student@example.com
-        PGADMIN_DEFAULT_PASSWORD: learn_ansible
 
   tasks:
     - name: Run podman container using pgadmin_container var
       containers.podman.podman_container:
         name: "{{ pgadmin_container.name }}"
         image: "{{ pgadmin_container.image }}"
-        state: started
-        ports: "{{ pgadmin_container.ports }}"
-        generate_systemd: "{{ pgadmin_container.generate_systemd }}"
-        restart_policy: always
-        env: "{{ pgadmin_container.env }}"
+        state: "{{ pgadmin_container.state }}"
         network: "{{ pgadmin_container.network }}"
+        ports: "{{ pgadmin_container.ports }}"
+        env: "{{ pgadmin_container.env }}"
+        generate_systemd: "{{ pgadmin_container.generate_systemd }}"
+
 
     - name: Start, enable and reload daemon for {{ pgadmin_service_name }}
       ansible.builtin.systemd:
