@@ -18,10 +18,10 @@
         path: /etc/systemd/system/
         container_prefix: app
         restart_policy: always
-
       ports:
         - 8083:80
       network: bridge
+
   tasks:
     - name: Run podman container using pgadmin_container var
       containers.podman.podman_container:
