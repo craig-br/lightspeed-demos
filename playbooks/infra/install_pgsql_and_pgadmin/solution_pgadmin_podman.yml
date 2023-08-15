@@ -3,11 +3,9 @@
   become: true
 
   vars:
-
     pgadmin_service_name: app-pgadmin
 
     pgadmin_container:
-
       image: docker.io/dpage/pgadmin4
       name: pgadmin
       network: bridge
@@ -39,4 +37,3 @@
         state: started
         enabled: true
         daemon_reload: true
-  
