@@ -37,11 +37,15 @@
         filters:
           tag:Name: subnet-lightspeed
       register: subnet_lightspeed
-
     - name: Create vpc_subnet_id var
       ansible.builtin.set_fact:
         vpc_subnet_id: "{{ subnet_lightspeed.subnets[0].subnet_id }}"
 
+        # # 1. Uncomment this task description.
+    # - name: Create EC2 t2.micro instance
+
+        # # 2. Remove previous task description and suggestion and uncomment the "vars:" section.
+        # # 3. Generate a new task using the below task description.
     - name: Create EC2 t2.micro instance using ec2_config var
       amazon.aws.ec2_instance:
         name: "{{ ec2_config.name }}"

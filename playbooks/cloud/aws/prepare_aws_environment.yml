@@ -11,12 +11,48 @@
         function: lightspeed-demo
 
   tasks:
+    #  Check for controller job template _SANDBOX_ID var or terminal env var
+    - name: Check if this is Instruqt environment
+      ansible.builtin.set_fact:
+        __sandbox_id: "{{ _SANDBOX_ID | default(lookup('ansible.builtin.env', '_SANDBOX_ID')) }}"
+
+    - name: Create EC2 key pair in Instruqt environment
+      when: __sandbox_id | length > 0
+      block:
+        # Evaluates to true if running from the terminal
+        - name: Check if ~/.ssh/instruqt_lab exists
+          ansible.builtin.stat:
+            path: ~/.ssh/instruqt_lab
+          register: __instruqt_ssh_key
+
+        - name: Create keypair called lightspeed-keypair from instruqt_lab.pub key
+          amazon.aws.ec2_key:
+            name: lightspeed-keypair
+            key_material: "{{ lookup('ansible.builtin.file', '~/.ssh/instruqt_lab.pub') }}"
+          when: __instruqt_ssh_key.stat.exists
+          register: ec2_key
+
+        - name: Create files folder
+          ansible.builtin.file:
+            path: files
+            state: directory
+            mode: '0755'
+          when: __instruqt_ssh_key.stat.exists
+
+        - name: Copy instruqt_lab key to files folder
+          ansible.builtin.copy:
+            src: ~/.ssh/instruqt_lab
+            dest: files/aws_demo_ssh_key
+            mode: '0600'
+          when: __instruqt_ssh_key.stat.exists
+
     - name: Create key pair called lightspeed-keypair
       amazon.aws.ec2_key:
         name: lightspeed-keypair
-        force: true
       register: ec2_key
+      when: __sandbox_id | length == 0
       notify:
+        - Create files folder
         - Save private key file
 
     - name: Create VPC named vpc-lightspeed
@@ -78,5 +114,11 @@
     - name: Save private key file
       ansible.builtin.copy:
         content: "{{ ec2_key.key.private_key }}"
-        dest: "{{ playbook_dir }}/../lightspeed-keypair.pem"
+        dest: "files/lightspeed-keypair.pem"
         mode: '0600'
+
+    - name: Create files folder
+      ansible.builtin.file:
+        state: directory
+        path: files
+        mode: '0755'

@@ -28,8 +28,6 @@
 
     # - name: Gather subnet info tag:Name subnet-lightspeed
 
-    # - name: Create vpc_subnet_id var
-
         # # 1. Uncomment this task description.
     # - name: Create EC2 t2.micro instance
 

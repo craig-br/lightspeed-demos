@@ -1,31 +1,20 @@
-# Install and configure Cockpit
-
-## Configure and activate Ansible Lightspeed
-
-Install the VS Code extension and activate Ansible Lightspeed using resources in the [getting started guide](../../../getting_started.md).
-
-## ❗️Test examples before doing a demo
-
-The model continues to improve and evolve with each release and generated suggestions could differ from the examples provided.
-
-### Tested content is available in the corresponding `solutions` folder
-
-Tested Ansible content is available in the [solutions](./solutions/) folder. Please use this to compare your generated suggestions to the tested Ansible content.
+# Install and configure Cockpit using Ansible Lightspeed
 
 ## Overview
 
-This Playbook installs Cockpit, copies a custom configuration file, and starts the cockpit service.  
+This Playbook installs Cockpit, copies a custom configuration file, and starts the `cockpit` service.  
 
 The demo illustrates:
 
 * How Ansible Lightspeed uses the full Playbook context when generating a task.
 * Uses a generic task prompt to generate applicable, accurate Ansible code based on the existing Playbook content.
 
-![](../../../assets/img/lightspeed_install_cockpit.gif)
+![](../../../assets/img/lab_install_cockpit_solution_generate_playbook.gif)
 
 ## Demo preparation
 
-1. Create an Ansible Inventory file with a `rhel` Ansible inventory group with the corresponding Linux target host(s) details.
+1. Install the VS Code extension and activate Ansible Lightspeed using resources in the [getting started guide](../../../GETTING_STARTED.md).
+2. If not running this example in the Ansible self-paced labs environment, create an Ansible Inventory file with a `rhel` Ansible inventory group with the corresponding Linux target host(s) details.
 
 * [Example Ansible inventory file](./inventory/inventory.yml)
 
@@ -43,19 +32,13 @@ all:
     ansible_host_key_checking: false
 ```
 
+## Tested content
+
+The model continues to improve and evolve with each release and generated suggestions could differ from the examples provided. Tested content is available in the corresponding [`solution_install_cockpit.yml`](./solution_install_cockpit.yml) Playbook.
+
 ## Running the demo
 
-### Demo content
-
-#### Initial Ansible Playbook
-
-[./playbooks/infra/install_cockpit/install_cockpit.yml](./install_cockpit.yml)
-
-#### Tested Ansible Playbook
-
-[./playbooks/infra/install_cockpit/solutions/install_cockpit.yml](./solutions/install_cockpit.yml)
-
-Run the steps below in the [./playbooks/infra/install_cockpit/install_cockpit.yml](./install_cockpit.yml) example Ansible Playbook.
+Run the steps below in the [./playbooks/infra/install_cockpit/demo_install_cockpit.yml](./demo_install_cockpit.yml) Ansible Playbook.
 
 ### Step 1
 
