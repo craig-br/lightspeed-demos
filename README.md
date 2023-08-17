@@ -1,24 +1,24 @@
-# Ansible Lightspeed demo content
+# Ansible Lightspeed technical preview demo content
 
 Compilation of Ansible Lightspeed demo content and examples.
 
-## How do I configure Ansible Lightspeed?
+## Ansible Lightspeed demo list
 
-Please use the following resources to install the Ansible VS Code extension and activate Ansible Lightspeed:
+Please refer to the `README.md` for each demo in the corresponding demo root folder for detailed demo instructions.
 
-* [Ansible Lightspeed technical preview blog](https://www.ansible.com/blog/welcome-to-the-ansible-lightspeed-technical-preview)
-* [Ansible Lightspeed technical preview video](https://youtu.be/yfXcGB7l0II)
+### Infrastructure
 
-Feel free to ask questions and provide feedback in the [Ansible Lightspeed Matrix Room](https://matrix.to/#/#lightspeed:ansible.com).
+* [Install and configure Cockpit](./playbooks/infra/install_cockpit/README.md)
+* [Install and configure postgresql and pgadmin4 podman container](./playbooks/infra/install_pgsql_and_pgadmin/)
 
-## ❗️Test before doing a demo
+### Cloud
 
-The IBM Watson Code Assistant model continues to improve and evolve with each release. This can result in generated suggestions that differ from the examples provided.
+* [Provision an AWS EC2 instance](./playbooks/cloud/aws/README.md)
+* [Provision Azure resources and VM](./playbooks/cloud/azure/README.md)
 
-### Tested `solution_*.yml` Playbooks are available for each demo.
+## How do I get started with Ansible Lightspeed?
 
-Tested Ansible Playbooks are available for each corresponding demo Playbook and start with the `solution_*.yml` prefix. For example, `solution_provision_azure_vm.yml`.  
-Please use this to compare your generated suggestions before doing the demo.
+Please follow the instructions provided by the resources available in the [getting started guide](./GETTING_STARTED.md).
 
 ## Demo content folder structure
 
@@ -28,10 +28,10 @@ The repository folder structure is as follows.
 .
 └── playbooks/
     └── <domain>/
-        ├── demo_<playbook_name>.yml <-- Initial Ansible content for demo.
-        └── prepare_<playbook_name>.yml <-- Used to prepare environment for demo.
-        └── README.md <-- Step by step instructions.
-        └── solution_<playbook_name>.yml <-- Tested Ansible content for comparison.
+        └── <demo_name>/
+            ├── demo_<playbook_name>.yml <-- Initial Ansible content for demo.
+            ├── solution_<playbook_name>.yml <-- Tested Ansible content for comparison.
+            └── prepare_<playbook_name>.yml <-- Initial Playbook to configure the demo environment.
 ```
 
 * `<domain>` - Ansible examples are sorted by domain. For example, the _cloud_ folder contains AWS, Azure, and Google Cloud content.
@@ -40,19 +40,11 @@ The repository folder structure is as follows.
 * `README.md` - Contains a video and step-by-step instructions to prepare and perform the demo.
 * `solution_<playbook_name>.yml` - Playbooks that start with `solution_*` have been tested with the latest version of the Ansible Lightspeed model. Use the tested Ansible content to compare your Ansible Lightspeed-generated outputs before the demo.
 
-## Ansible Lightspeed demo list
+## ❗️Test before doing a demo if you're using this content locally
 
-Please refer to the `README.md` for each demo in the corresponding demo root folder for detailed demo instructions.
+The IBM Watson Code Assistant model continues to improve and evolve with each release. This can result in generated suggestions that differ from the examples provided.
 
-### Infrastructure
-
-* [Install and configure Cockpit](./playbooks/infra/install_cockpit/README.md)
-* [Install and configure web and database packages](./playbooks/infra/install_web_and_db/README.md)
-
-### Cloud
-
-* [Provision an AWS EC2 instance](./playbooks/cloud/aws/README.md)
-* [Provision Azure resources and VM](./playbooks/cloud/azure/README.md)
-
+Tested Ansible Playbooks are available for each corresponding demo Playbook and start with the `solution_*.yml` prefix. For example, `solution_provision_azure_vm.yml`.  
+Please use this to compare your generated suggestions before doing the demo.
 
 ---
