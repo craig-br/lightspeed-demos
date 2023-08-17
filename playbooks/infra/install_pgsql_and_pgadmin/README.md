@@ -1,32 +1,24 @@
-# Install and configure PostgreSQL and PGAdmin container
-
-## ❗️Note
-
-### Test the examples prior to performing a demo
-
-The IBM Watson Code Assistant model continues to improve and evolve with each release. This can result in generated suggestions that differ from the examples provided.
-
-### Tested content is available in the corresponding `solutions` folder
-
-Tested Ansible content is available in the [solutions](./solutions/) folder. Please use this to compare your generated suggestions to the tested Ansible content.
+# Install and configure PostgreSQL and PGAdmin container using Ansible Lightspeed
 
 ## Overview
 
-- The first Ansible Play installs `httpd`, copies a custom Apache configuration file with the correct file permissions, and starts and enables the `httpd` service.
-- The second Ansible Play installs `postgresql-server`, initializes the database, and starts and enables the `postgresql` service.
+The demo consists for two Ansible Playbooks that performs the following tasks respectively:
 
-![](../../../assets/img/lightspeed_app_and_db_demo.gif)
+- Installs `postgresql-server`, initializes the database, and starts and enables the `postgresql` service.
+- Uses `podman` to configure and run the **dpage/pgadmin4** as a service.
+
+This demo illustrates the following Ansible Lightspeed features:
+
+- Translating easy-to-understand prompts into syntactically correct Ansible content without needing in depth knowledge of the automated technology.
+- Using keywords, such us `....using X var`, in prompts to obtain desired suggestions.
+- Using the full YAML file context to generate Ansible content with best practices.
 
 ## Demo preparation
 
-1. Install the Ansible VS Code extension and activate Ansible Lightspeed. Below are resources to get started:
+1. Install the VS Code extension and activate Ansible Lightspeed using resources in the [getting started guide](../../../GETTING_STARTED.md).
+2. If not running this example in the Ansible self-paced labs environment, create an Ansible Inventory file with `webservers` and `databases` Ansible inventory groups with the corresponding Linux target host(s) details.
 
-- [Ansible Lightspeed Technical Preview blog](https://www.ansible.com/blog/welcome-to-the-ansible-lightspeed-technical-preview).
-- [Ansible Lightspeed Technical Preview video](https://youtu.be/yfXcGB7l0II).
-
-2. Create an Ansible Inventory file with `webservers` and `databases` group with the corresponding Linux target host(s).
-
-- [Example Ansible inventory file](./inventory/inventory.yml)
+[Example Ansible inventory file](./inventory/inventory.yml)
 
 ```yaml
 ---
@@ -35,35 +27,28 @@ all:
     webservers:
       hosts:
         webserver-01:
-          ansible_host: "Your Ansible target host"
+          ansible_host: example-host # Update this to your target host.
     databases:
       hosts:
         database-01:
-          ansible_host: "Your Ansible target host"
+          ansible_host: example-host # Update this to your target host.
   vars:
-    ansible_ssh_private_key_file: 'Your SSH private key file'
-    ansible_user: 'Your Ansible user'
+    ansible_ssh_private_key_file: "example-key" # Update this to your target host.
+    ansible_user: example-user # Update this to your target host.
     ansible_host_key_checking: false
-
 ```
+
+## Tested content
+
+The model continues to improve and evolve with each release and generated suggestions could differ from the examples provided. Tested content is available in the corresponding [`solution_install_cockpit.yml`](./solution_install_cockpit.yml) Playbook.
 
 ## Running the demo
 
-### Demo content
+### First Playbook `demo_install_pgsql.yml`
 
-#### Initial Ansible Playbook
-
-[./playbooks/infra/install_web_and_db/install_web_and_db.yml](./install_web_and_db.yml)
-
-#### Tested Ansible Playbook
-
-[./playbooks/infra/install_web_and_db/solutions/install_web_and_db.yml](./solutions/install_web_and_db.yml)
-
-Run the steps below in the [./playbooks/infra/install_web_and_db/install_web_and_db.yml](./install_web_and_db.yml) example Ansible Playbook.
+Run the steps below in the [./playbooks/infra/install_pgsql_and_pgadmin//demo_install_pgsql.yml](./demo_install_pgsql.yml) Ansible Playbook.
 
 ### Step 1
-
-#### **In the first Ansible play**
 
 #### Uncomment and generate first task `- name: Install httpd package`
 
