@@ -16,10 +16,6 @@ Please refer to the `README.md` for each demo in the corresponding demo root fol
 * [Provision an AWS EC2 instance](./playbooks/cloud/aws/README.md)
 * [Provision Azure resources and VM](./playbooks/cloud/azure/README.md)
 
-## How do I get started with Ansible Lightspeed?
-
-Please follow the instructions provided by the resources available in the [getting started guide](./GETTING_STARTED.md).
-
 ## Demo content folder structure
 
 The repository folder structure is as follows.
@@ -39,6 +35,10 @@ The repository folder structure is as follows.
 * `prepare_<playbook_name>.yml` - Playbooks that start with `prepare_*` prepares the environment for the demo.
 * `README.md` - Contains a video and step-by-step instructions to prepare and perform the demo.
 * `solution_<playbook_name>.yml` - Playbooks that start with `solution_*` have been tested with the latest version of the Ansible Lightspeed model. Use the tested Ansible content to compare your Ansible Lightspeed-generated outputs before the demo.
+
+## How do I get started with Ansible Lightspeed?
+
+Please follow the instructions provided by the resources available in the [getting started guide](./GETTING_STARTED.md).
 
 ## ❗️Test before doing a demo if you're using this content locally
 
