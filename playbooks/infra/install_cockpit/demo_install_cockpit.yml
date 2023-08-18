@@ -3,10 +3,10 @@
   hosts: rhel
   become: true
 
-  module_defaults:
-    ansible.builtin.service:
-      enabled: true
-      state: started
+  # module_defaults:
+  #   ansible.builtin.service:
+  #     enabled: true
+  #     state: started
 
   tasks:
         # TASK 1
