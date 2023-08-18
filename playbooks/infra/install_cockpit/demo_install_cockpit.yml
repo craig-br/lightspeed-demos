@@ -23,7 +23,7 @@
         # TASK 3
         # # 3a. Uncomment task description below and generate a task suggestion.
         # #     Note - Ansible Lightspeed used the generic "Start and enable service" prompt
-        # #            and full Playbook context to infer the recommendation should start the cockpit service.
+        # #            and full Playbook context to infer the recommendation should start the "cockpit" service.
         # # 3b. Uncomment the "module_defaults" section at the top of the Playbook.
         # # 3c. Clear current task suggestion and request updated suggestion.
         # #     Note - Ansible Lightspeed used the full Playbook context and evaluated the "module_defaults"
@@ -32,6 +32,6 @@
     # - name: Start and enable service
 
         # TASK 4
-        # # 4a. Uncomment task description below and generate an Ansible Playbook task suggestion. Save.
+        # # 4a. Uncomment task description below and generate an Ansible Playbook task suggestion.
         # # 4b. Save the Playbook.
     # - name: Wait 15 seconds port 9090
