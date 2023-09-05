@@ -69,13 +69,13 @@ Run the steps below in the [./playbooks/cloud/aws/demo_provision_aws_instance.ym
 
 ### Step 5
 
-#### Uncomment and generate task `Create EC2 t2.micro instance`
+#### Uncomment and generate task `Create t2.micro instance`
 
 - Suggestion provides good variable examples for module arguments.
 
 ### Step 6
 
-#### Remove the previous task and generate a new task with  `- name: Create EC2 t2.micro instance using ec2_config var`
+#### Remove the previous task and generate a new task with  `- name: Create t2.micro instance using ec2_config var`
 
 - Ansible Lightspeed used the updated natural language prompt and referenced the `ec2_config` variable in the suggestion.
 
