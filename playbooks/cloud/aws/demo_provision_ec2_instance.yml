@@ -29,8 +29,8 @@
     # - name: Gather subnet info tag:Name subnet-lightspeed
 
         # # 1. Uncomment this task description.
-    # - name: Create EC2 t2.micro instance
+    # - name: Create t2.micro instance
 
         # # 2. Remove previous task description and suggestion and uncomment the "vars:" section.
         # # 3. Generate a new task using the below task description.
-    # - name: Create EC2 t2.micro instance using ec2_config var
+    # - name: Create t2.micro instance using ec2_config var
