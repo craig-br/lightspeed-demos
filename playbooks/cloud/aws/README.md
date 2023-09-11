@@ -37,8 +37,6 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
 
 [./playbooks/cloud/aws/solution_provision_ec2_instance.yml](./solution_provision_ec2_instance.yml)
 
-## Running the demo
-
 Run the steps below in the [./playbooks/cloud/aws/demo_provision_aws_instance.yml](./demo_provision_ec2_instance.yml) example Ansible Playbook.
 
 ### Step 1
