@@ -22,7 +22,7 @@ This demo provisions an AWS EC2 instance using pre-existing variables.
 
 ### Accessing the instance
 
-1. The `./prepare_ec2_environment.yml` creates a temporary SSH private .pem key file in the `./playbooks/cloud/aws/files` folder to access the instance.
+1. If you're running this outside of the [Ansible Interactive Labs (Instruqt)](https://www.redhat.com/en/interactive-labs/ansible) environment, the `./prepare_ec2_environment.yml` creates a temporary SSH private .pem key file in the `./playbooks/cloud/aws/files` folder to access the instance.
 2. An example inventory is located the [inventory folder](./inventory/).
 
 ## Running the demo
