@@ -1,5 +1,5 @@
 ---
-- name: AWS Cloud Operations
+- name: EC2 Cloud Operations
   hosts: localhost
   connection: local
   gather_facts: false
@@ -9,28 +9,38 @@
       region: us-east-1
 
   # vars:
-  #   ec2_config:
+  #   ec2_instance:
   #     name: lightspeed-instance-01
   #     key_name: lightspeed-keypair
   #     image_id: ami-016eb5d644c333ccb # RHEL 9 us-east-1
-  #     state: running
-  #     volumes:
-  #       - device_name: /dev/sda1
-  #         ebs:
-  #           delete_on_termination: true
   #     tags:
   #       function: lightspeed-demo
+  #     security_group: secgroup-lightspeed
 
   tasks:
-    # - name: Gather secgroup-lightspeed EC2 security group info
-
-    # - name: Create 'security_group' var from secgroup-lightspeed group_id
+        # TASK 1
+        # # 1a. Uncomment task description below and generate a task suggestion.
+        # #     Note - Best practices: The suggestion used the Fully Qualified Collection name.
+        # #     Note - Context: Ansible Lightspeed used the Playbook name "EC2 Cloud Operations" to use the correct "amazon.aws.ec2_vpc_subnet_info" module.
 
     # - name: Gather subnet info tag:Name subnet-lightspeed
 
-        # # 1. Uncomment this task description.
-    # - name: Create t2.micro instance
+        # TASK 2
+        # # 2a. Uncomment task description below and generate a task suggestion.
+        # #     Note - Context: The suggestion included the previous task's registered variable in the suggestion.
+        # #     Note - Accuracy: The suggestion provides the correct key value from the previously task's registered variable.
 
-        # # 2. Remove previous task description and suggestion and uncomment the "vars:" section.
-        # # 3. Generate a new task using the below task description.
-    # - name: Create t2.micro instance using ec2_config var
+    # - name: Create vpc_subnet_id var
+
+        # TASK 3
+        # # 3a. Uncomment task description "Provision t3.micro instance" below and generate a task suggestion.
+        # #     Note - Efficiency: The suggestion provides practical variable examples to improve efficiency.
+
+    # - name: Provision t3.micro instance
+
+        # # 3b. Remove the above task and suggestion.
+        # #     Uncomment 2nd task description "Provision t3.micro instance using ec2_instance var".
+        # #     Generate an updated suggestion.
+        # #     Note - Context: The updated suggestion includes the "ec2_instance variable fields in the suggestion"
+
+    # - name: Provision t3.micro instance using ec2_instance var

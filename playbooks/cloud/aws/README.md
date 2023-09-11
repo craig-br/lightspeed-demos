@@ -43,17 +43,19 @@ Run the steps below in the [./playbooks/cloud/aws/demo_provision_aws_instance.ym
 
 ### Step 1
 
-#### Uncomment and generate task `- name: Gather secgroup-lightspeed EC2 security group info`
+#### Uncomment and generate task `# - name: Gather subnet info tag:Name subnet-lightspeed`
 
 - Used natural language prompt to generate syntactically correct Ansible Playbook Task.
 - Suggestion incorporated Ansible best practices and used Fully Qualified Collection Name (FQCN).
+- Ansible Lightspeed used the Playbook name "EC2 Cloud Operations" to use the correct "amazon.aws.ec2_vpc_subnet_info" module.
 
 ### Step 2
 
-#### Uncomment and generate task `- name: Create 'security_group' var from secgroup-lightspeed group_id`
+#### Uncomment and generate task `Create vpc_subnet_id var`
 
 - Used the Playbook context to use AWS Ansible modules in the suggestion.
-- Used natural language to generate the `security_group` variable using the correct variable keys.
+- Used natural language to generate the `vpc_subnet_id` variable using the correct variable keys.
+- The suggestion provides the correct key value from the previously task's registered variable.
 
 ### Step 3
 
@@ -69,14 +71,16 @@ Run the steps below in the [./playbooks/cloud/aws/demo_provision_aws_instance.ym
 
 ### Step 5
 
-#### Uncomment and generate task `Create t2.micro instance`
+#### Uncomment and generate task `- name: Provision t3.micro instance`
 
 - Suggestion provides good variable examples for module arguments.
 
 ### Step 6
 
-#### Remove the previous task and generate a new task with  `- name: Create t2.micro instance using ec2_config var`
+#### Uncomment the `vars` section at the top of the Playbook and remove the previous task
 
-- Ansible Lightspeed used the updated natural language prompt and referenced the `ec2_config` variable in the suggestion.
+#### Generate a new, updated  task with  `- name: Provision t3.micro instance using ec2_instance var`
+
+- Ansible Lightspeed used the updated natural language prompt and referenced the `ec2_instance` variable in the suggestion.
 
 ---
