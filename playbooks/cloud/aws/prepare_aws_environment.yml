@@ -36,14 +36,14 @@
           ansible.builtin.file:
             path: files
             state: directory
-            mode: '0755'
+            mode: "0755"
           when: __instruqt_ssh_key.stat.exists
 
         - name: Copy instruqt_lab key to files folder
           ansible.builtin.copy:
             src: ~/.ssh/instruqt_lab
             dest: files/aws_demo_ssh_key
-            mode: '0600'
+            mode: "0600"
           when: __instruqt_ssh_key.stat.exists
 
     - name: Create key pair called lightspeed-keypair
@@ -78,7 +78,7 @@
           - proto: tcp
             ports:
               - 22
-            cidr_ip: 0.0.0.0/0
+            cidr_ip: "0.0.0.0/0"
             rule_desc: allow all on ssh port
       register: secgroup_lightspeed
 
@@ -107,18 +107,18 @@
         subnets:
           - "{{ subnet.subnet.id }}"
         routes:
-          - dest: 0.0.0.0/0
+          - dest: "0.0.0.0/0"
             gateway_id: "{{ igw.gateway_id }}"
 
   handlers:
     - name: Save private key file
       ansible.builtin.copy:
         content: "{{ ec2_key.key.private_key }}"
-        dest: "files/lightspeed-keypair.pem"
-        mode: '0600'
+        dest: files/lightspeed-keypair.pem
+        mode: "0600"
 
     - name: Create files folder
       ansible.builtin.file:
         state: directory
         path: files
-        mode: '0755'
+        mode: "0755"
