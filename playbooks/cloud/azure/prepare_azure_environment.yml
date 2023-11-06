@@ -27,19 +27,19 @@
           ansible.builtin.file:
             path: files
             state: directory
-            mode: '0755'
+            mode: "0755"
           when: __instruqt_ssh_key.stat.exists
 
         - name: Copy Instruqt lab SSH keys
           ansible.builtin.copy:
-            src: "~/.ssh/{{ item.name }}"
-            dest: "files/azure_demo_ssh_key{{ item.name | splitext | last }}"
+            src: ~/.ssh/{{ item.name }}
+            dest: files/azure_demo_ssh_key{{ item.name | splitext | last }}
             mode: "{{ item.mode }}"
           loop:
             - name: instruqt_lab
-              mode: '0600'
+              mode: "0600"
             - name: instruqt_lab.pub
-              mode: '0644'
+              mode: "0644"
           when: __instruqt_ssh_key.stat.exists
 
     - name: Generate local SSH keys if not Instruqt environment
@@ -49,7 +49,7 @@
           ansible.builtin.file:
             path: files
             state: directory
-            mode: '0755'
+            mode: "0755"
 
         - name: Generate Linux SSH key called files/azure_demo_ssh_key # noqa name[template]
           community.crypto.openssh_keypair:
