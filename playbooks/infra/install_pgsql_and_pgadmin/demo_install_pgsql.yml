@@ -8,7 +8,7 @@
     pgadmin_container:
       name: pgadmin
       image: docker.io/dpage/pgadmin4
-      state: running
+      state: started
       env:
         PGADMIN_DEFAULT_EMAIL: student@example.com
         PGADMIN_DEFAULT_PASSWORD: learn_ansible
