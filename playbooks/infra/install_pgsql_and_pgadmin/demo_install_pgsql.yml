@@ -2,7 +2,6 @@
 - name: Configure Database servers
   hosts: rhel
   become: true
-  gather_facts: false
 
   vars:
     pgadmin_container:
@@ -20,6 +19,7 @@
       ansible.builtin.package:
         name: postgresql-server
         state: present
+
 
     # Do the initial postgresql config & start the service & allow the traffic through the firewall
     - name: Do the initial postgresql config
@@ -40,6 +40,7 @@
         state: enabled
         immediate: true
 
+
     - name: Create podman container using pgadmin_container var
       containers.podman.podman_container:
         name: "{{ pgadmin_container.name }}"
@@ -50,4 +51,3 @@
         volumes:
           - /var/lib/pgsql/data:/var/lib/postgresql/data:Z
           - /etc/localtime:/etc/localtime:ro
-
