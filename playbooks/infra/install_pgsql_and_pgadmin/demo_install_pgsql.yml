@@ -12,6 +12,7 @@
       env:
         PGADMIN_DEFAULT_EMAIL: student@example.com
         PGADMIN_DEFAULT_PASSWORD: learn_ansible
+      ip: "10.88.64.128"
       ports:
         - 8083:80
 
@@ -50,3 +51,4 @@
         volumes:
           - /var/lib/pgsql/data:/var/lib/postgresql/data:Z
           - /etc/localtime:/etc/localtime:ro
+        ip: "{{ pgadmin_container.ip }}"
