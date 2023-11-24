@@ -39,7 +39,6 @@
         permanent: true
         state: enabled
         immediate: true
-    
 
     - name: Create podman container using pgadmin_container var
       containers.podman.podman_container:
@@ -51,4 +50,3 @@
         volumes:
           - /var/lib/pgsql/data:/var/lib/postgresql/data:Z
           - /etc/localtime:/etc/localtime:ro
-    
