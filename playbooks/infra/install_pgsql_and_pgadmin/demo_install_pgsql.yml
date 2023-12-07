@@ -2,7 +2,6 @@
 - name: Configure Database servers
   hosts: rhel
   become: true
-  gather_facts: false
 
   vars:
     pgadmin_container:
@@ -12,6 +11,8 @@
       env:
         PGADMIN_DEFAULT_EMAIL: student@example.com
         PGADMIN_DEFAULT_PASSWORD: learn_ansible
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
       ports:
         - 8083:80
 
@@ -47,6 +48,4 @@
         state: "{{ pgadmin_container.state }}"
         env: "{{ pgadmin_container.env }}"
         ports: "{{ pgadmin_container.ports }}"
-        volumes:
-          - /var/lib/pgsql/data:/var/lib/postgresql/data:Z
-          - /etc/localtime:/etc/localtime:ro
+        volumes: "{{ pgadmin_container.volumes }}"
