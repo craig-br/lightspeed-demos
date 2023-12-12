@@ -2,7 +2,6 @@
 - name: Configure Database servers
   hosts: rhel
   become: true
-  gather_facts: false
 
   vars:
     pgadmin_container:
@@ -12,18 +11,20 @@
       env:
         PGADMIN_DEFAULT_EMAIL: student@example.com
         PGADMIN_DEFAULT_PASSWORD: learn_ansible
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
       ports:
         - 8083:80
 
-  tasks:    
+  tasks:
     - name: Install postgresql-server
       ansible.builtin.package:
         name: postgresql-server
         state: present
 
-    # Do the initial postgresql config & start the service & allow the traffic through the firewall
-    - name: Do the initial postgresql config
-      ansible.builtin.command: postgresql-setup initdb
+    # Do initial postgresql config & start the service & allow the traffic through the firewall
+    - name: Do initial postgresql config
+      ansible.builtin.command: postgresql-setup --initdb
       args:
         creates: /var/lib/pgsql/data/postgresql.conf
 
@@ -31,7 +32,6 @@
       ansible.builtin.service:
         name: postgresql
         state: started
-        enabled: true
 
     - name: Allow the traffic through the firewall
       ansible.posix.firewalld:
@@ -39,6 +39,7 @@
         permanent: true
         state: enabled
         immediate: true
+    
 
     - name: Create podman container using pgadmin_container var
       containers.podman.podman_container:
@@ -47,6 +48,4 @@
         state: "{{ pgadmin_container.state }}"
         env: "{{ pgadmin_container.env }}"
         ports: "{{ pgadmin_container.ports }}"
-        volumes:
-          - /var/lib/pgsql/data:/var/lib/postgresql/data:Z
-          - /etc/localtime:/etc/localtime:ro
+        volumes: "{{ pgadmin_container.volumes }}"
